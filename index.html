@@ -9,7 +9,7 @@
 	<meta property="og:image" content="img/Lightsaber_blue.png" />
 	<meta property="og:description" content="Hello, This is a sample of image editor i made by jquery ui and html5 canvas for generator image file." >
 	<title>ImageEditorVersion2</title>
-	<script>
+<!-- 	<script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -18,7 +18,7 @@
   ga('create', 'UA-71736556-1', 'auto');
   ga('send', 'pageview');
 
-</script>
+</script> -->
 	<link rel="stylesheet" type="text/css" href="css/jquery.ui.core.css" />
     <link rel="stylesheet" type="text/css" href="css/jquery.ui.resizable.css" />
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -39,9 +39,16 @@
 						<div  class="draggable ui-widget-content ">
 							<div class="santaHat"></div>
 						</div>
-						<div  class="draggable ui-widget-content ">
-							<div class="resizable LightsaberBlue"></div>
+						<div class="draggable ui-widget-content">
+							
+							<div class="resizable">
+								<!-- <input type="text" class="inputText"> -->
+								<textarea name="" id="" cols="30" rows="10" class="inputText" ></textarea>
+							</div>
 						</div>
+						<!-- <div  class="draggable ui-widget-content ">
+							<div class="resizable LightsaberBlue"></div>
+						</div> -->
 					</div>
 				</div>
 				
@@ -72,8 +79,11 @@
 						<input type="file" id="uploadCapture" accept="image/*" capture>
 						Click here for upload image from Camara(only for moblie).
 					</div>
+					<div class="btn-content">
+						<button type="button" class="uploadItemImageBtn">uploadItemImage</button>
+						<input type="file" accept="image/*" id="uploadItemImage">
+					</div>
 					<!-- <input type="button" value="click here for upload image" id="upload_btn"> -->
-						
 				</div>
 			</form>
 				<div class="btn-content">
@@ -109,7 +119,6 @@
 
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/html2canvas.js"></script>
-<!-- <script type="text/javascript" src="js/html2canvas.svg.js"></script> -->
 <script type="text/javascript" src="js/FileSaver2.js"></script>
 <script type="text/javascript" src="http://static.addtoany.com/menu/page.js"></script>
 <script type="text/javascript" src="js/jquery.ui.core.js"></script>
@@ -122,10 +131,30 @@
 <script type="text/javascript">
 
 $(function(){
-// var _URL = window.URL || window.webkitURL;
+
 
 $("#upload_btn").click(function(){
 	$("#upload").trigger("click");
+});
+
+$('.uploadItemImageBtn').click(function(){
+	$("#uploadItemImage").trigger("click");
+});
+
+$("#uploadItemImage").change(function(){
+	var file_org = $(this);
+	var file = file_org[0].files[0];
+ 	var reader = new FileReader();
+ 	var image = $("#pw_image");
+
+ 	if(file){
+ 		reader.readAsDataURL(file);
+ 	}
+ 	reader.onload = function(e){
+	 // console.log(e.target.result);
+	 image.append('<div class="draggable ui-widget-content"><div class="resizable"><img src='+e.target.result+' alt="item"></div></div>');
+	 $('.draggable').draggable();
+	}
 });
 
 $("#upload").change(function(){
@@ -192,21 +221,25 @@ $("#uploadCapture").change(function(){
 
 
 // dragging image
-$( ".draggable" ).draggable();
+
+
+// $( ".draggable" ).draggable();
 
 $(".resizable").resizable({
-
 	aspectRatio: true,
-	handles:     'ne, nw, se, sw'
+	handles:     'ne, nw, se, sw',
+	maxWidth: 300
 });
 $(".santaHat").resizable({
-
 	aspectRatio: true,
-	handles:     'ne, nw, se, sw'
+	handles:     'ne, nw, se, sw',
+	maxWidth: 300,
+	resize:function(){
+		currentSize = $(this).outerWidth();
+		console.log(currentSize);
+	}
 });
 $(".resizable").rotatable();
-
-
 
 $('.preview_image').mouseenter(function(){
 	$('.ui-resizable-handle').show();
