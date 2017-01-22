@@ -36,19 +36,15 @@
 					<!-- <label class="choose_file" for="upload">upload file</label> -->
 					<div id="pw_image" class="pw_image">
 						<!-- draggable image -->
-						<div  class="draggable ui-widget-content ">
-							<div class="santaHat"></div>
-						</div>
-						<div class="draggable ui-widget-content">
+					
+						<!-- <div class="draggable ui-widget-content">
 							
 							<div class="resizable">
-								<!-- <input type="text" class="inputText"> -->
-								<textarea name="" id="" cols="30" rows="10" class="inputText" ></textarea>
+								<input type="text" class="inputText">
+								<textarea name="" id="" cols="30" rows="10" class="inputText" >input text here</textarea>
 							</div>
-						</div>
-						<!-- <div  class="draggable ui-widget-content ">
-							<div class="resizable LightsaberBlue"></div>
 						</div> -->
+						
 					</div>
 				</div>
 				
@@ -73,11 +69,14 @@
 				<div class="btn-content">
 					<div class="upload-btn">
 						<input type="file" id="upload" accept="image/*">
-						Click here for upload image.
+						Click here for upload background-image.
 					</div>
-					<div class="upload-btn">
+					<!-- <div class="upload-btn">
 						<input type="file" id="uploadCapture" accept="image/*" capture>
 						Click here for upload image from Camara(only for moblie).
+					</div> -->
+					<div class="btn-content">
+						<button type="button" class="addTextBoxBtn">addTextBox</button>
 					</div>
 					<div class="btn-content">
 						<button type="button" class="uploadItemImageBtn">uploadItemImage</button>
@@ -154,8 +153,25 @@ $("#uploadItemImage").change(function(){
 	 // console.log(e.target.result);
 	 image.append('<div class="draggable ui-widget-content"><div class="resizable"><img src='+e.target.result+' alt="item"></div></div>');
 	 $('.draggable').draggable();
+	 $(".resizable").resizable({
+			aspectRatio: true,
+			handles:     'ne, nw, se, sw',
+			maxWidth: 300
+		});
 	}
 });
+
+$('.addTextBoxBtn').click(function(){
+	var image = $("#pw_image");
+	image.append('<div class="draggable ui-widget-content"><div class="resizable"><textarea name="" id="" cols="30" rows="10" class="inputText" >input text here</textarea></div></div>');
+	 $('.draggable').draggable();
+	 $(".resizable").resizable({
+			aspectRatio: true,
+			handles:     'ne, nw, se, sw',
+			maxWidth: 300
+		});
+});
+
 
 $("#upload").change(function(){
 	var file_org = $(this);
@@ -193,9 +209,6 @@ $("#uploadCapture").change(function(){
 	var file = file_org[0].files[0];
  	var reader = new FileReader();
 	var image = $("#pw_image");
-	// var img;
-	// var width;
-	// var height;
 
 	if(file){
 	  //   img = new Image();
@@ -223,7 +236,7 @@ $("#uploadCapture").change(function(){
 // dragging image
 
 
-// $( ".draggable" ).draggable();
+$( ".draggable" ).draggable();
 
 $(".resizable").resizable({
 	aspectRatio: true,
